@@ -63,6 +63,8 @@ export const createAtaAccount = async(provider: anchor.AnchorProvider, fee_payer
 
     return userAssociatedTokenAccount
 }
+
+/// This function faucets 5 SOL for each new created account, and determine if either createAsssociated Wallet and mint token to that ATA account of the mint Account
 export const createUserAndAssociatedWallet = async (provider: anchor.AnchorProvider, mint: anchor.web3.PublicKey, createAta: boolean, amount?: bigint ): Promise<[anchor.web3.Keypair, anchor.web3.PublicKey | undefined]> => {
     const user = new anchor.web3.Keypair();
     let userAssociatedTokenAccount: anchor.web3.PublicKey | undefined = undefined;
@@ -111,7 +113,7 @@ export const createUserAndAssociatedWallet = async (provider: anchor.AnchorProvi
         
         const payer = anchor.web3.Keypair.generate();
 
-            // Airdropping tokens to a payer.
+        // Airdropping tokens to a payer.
         await provider.connection.confirmTransaction(
           await provider.connection.requestAirdrop(payer.publicKey, 1000000000),
           "processed"

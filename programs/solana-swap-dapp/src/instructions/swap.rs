@@ -3,6 +3,8 @@ use anchor_lang::system_program;
 
 // SIMPLE function to swap SOL using the contract
 
+pub const ONE_SOL: u64 = 1000000000;
+
 pub fn swap(
     ctx: Context<Swap>,
     
@@ -16,7 +18,7 @@ pub fn swap(
             from: user.to_account_info(),
             to: receiver.to_account_info(),
         });
-    system_program::transfer(cpi_context, 100000000000)?;
+    system_program::transfer(cpi_context, ONE_SOL)?;
     Ok(())
 }
 
@@ -29,5 +31,6 @@ pub struct Swap<'info> {
     /// CHECK: This is not dangerous
     #[account(mut)]
     pub receiver: AccountInfo<'info>,
+
     pub system_program: Program<'info, System>,
 }
