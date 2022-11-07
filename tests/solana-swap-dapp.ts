@@ -1,5 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import { Program } from "@project-serum/anchor";
+import { Swapper } from "../scripts/bot/swapper";
 import { SolanaSwapDapp } from "../target/types/solana_swap_dapp";
 
 describe("solana-swap-dapp", () => {
@@ -10,7 +11,7 @@ describe("solana-swap-dapp", () => {
 
   it("Is initialized!", async () => {
     // Add your test here.
-    const tx = await program.methods.initialize().rpc();
-    console.log("Your transaction signature", tx);
+    let swapper = new Swapper();
+    console.log(swapper.program)
   });
 });

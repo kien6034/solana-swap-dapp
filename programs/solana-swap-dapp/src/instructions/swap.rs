@@ -26,6 +26,7 @@ pub struct Swap<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
 
+    /// CHECK: This is not dangerous
     #[account(mut)]
     pub receiver: AccountInfo<'info>,
     pub system_program: Program<'info, System>,
