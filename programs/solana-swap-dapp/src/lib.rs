@@ -2,11 +2,18 @@ use anchor_lang::prelude::*;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
+pub mod errors;
+pub mod instructions;
+
+
+use instructions::*;
+
 #[program]
 pub mod solana_swap_dapp {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+    pub fn swap(ctx: Context<Initialize>) -> Result<()> {
+        
         Ok(())
     }
 }
