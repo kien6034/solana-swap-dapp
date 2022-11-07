@@ -5,7 +5,7 @@ import { DataV2, createCreateMetadataAccountV2Instruction } from '@metaplex-foun
 import { findMetadataPda } from "@metaplex-foundation/js";
 
 
-export const createMintToken = async (provider: anchor.AnchorProvider): Promise<anchor.web3.PublicKey> => {
+export const createMintToken = async (provider: anchor.AnchorProvider, decimal: number): Promise<anchor.web3.PublicKey> => {
     const tokenMint = new anchor.web3.Keypair();
     const lamportsForMint = await provider.connection.getMinimumBalanceForRentExemption(spl.MintLayout.span);
     let tx = new anchor.web3.Transaction();
@@ -24,7 +24,7 @@ export const createMintToken = async (provider: anchor.AnchorProvider): Promise<
     tx.add(
       spl.createInitializeMintInstruction(
         tokenMint.publicKey,
-        6,
+        decimal,
         provider.wallet.publicKey,
         provider.wallet.publicKey
       )

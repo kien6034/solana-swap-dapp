@@ -1,8 +1,8 @@
 use anchor_lang::prelude::*;
-use crate::{state::Controller, ESCROW_PDA_SEED};
+use crate::{state::Controller};
 use anchor_spl::token::{ Mint, TokenAccount};
 
-use crate::{CONTROLLER_PDA_SEED};
+use crate::{CONTROLLER_PDA_SEED,ESCROW_PDA_SEED};
 use crate::errors::ControllerError;
 use std::str;
 

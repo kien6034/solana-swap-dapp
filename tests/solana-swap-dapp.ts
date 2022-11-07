@@ -4,6 +4,10 @@ import { Swapper } from "../scripts/bot/swapper";
 import { createMintToken, createUserAndAssociatedWallet, getAccountInfo } from "../scripts/utils/token";
 import { SolanaSwapDapp } from "../target/types/solana_swap_dapp";
 
+const CONTROLLER_ID= "1";
+const MOVE_DECIMAL = 6;
+const MOVE_PRICE = [new anchor.BN(10), new anchor.BN(1)]; // 1 move = 0.1 SOL
+
 describe("solana-swap-dapp", () => {
   // Configure the client to use the local cluster.
   const provider = anchor.AnchorProvider.env();
@@ -43,13 +47,18 @@ describe("solana-swap-dapp", () => {
      */
     
 
-    token_mint = await createMintToken(provider);
+    token_mint = await createMintToken(provider, MOVE_DECIMAL);
     [deployer, deployer_token_wallet] = await createUserAndAssociatedWallet(provider,token_mint,true, BigInt(100000000)); 
     [alice, alice_token_wallet] = await createUserAndAssociatedWallet(provider,token_mint,true, BigInt(10000000));
     [bob, bob_token_wallet] = await createUserAndAssociatedWallet(provider,token_mint,false); 
 
-    swapper = new Swapper(provider, deployer); // for my bot, need to add the provider and the deployer inorder to use localnet
+    swapper = new Swapper(CONTROLLER_ID, provider, deployer); // for my bot, need to add the provider and the deployer inorder to use localnet
   });
+
+
+  it("Inititalize", async()=>{
+    await swapper.initialize(deployer, token_mint, CONTROLLER_ID, MOVE_PRICE, MOVE_DECIMAL);
+  })
 
 
   it("Transfer SOL via the smart contract", async()=>{
