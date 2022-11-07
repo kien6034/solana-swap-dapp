@@ -12,11 +12,8 @@ use instructions::*;
 pub mod solana_swap_dapp {
     use super::*;
 
-    pub fn swap(ctx: Context<Initialize>) -> Result<()> {
-        
-        Ok(())
+    pub fn swap(ctx: Context<Swap>) -> Result<()> {
+        instructions::swap::swap(ctx)
     }
 }
 
-#[derive(Accounts)]
-pub struct Initialize {}
