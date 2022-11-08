@@ -17,9 +17,11 @@ pub fn initialize(
 
     let controller = &mut ctx.accounts.controller;
     let initializer = &ctx.accounts.initializer;
+    let token_mint = &ctx.accounts.token_mint;
 
     controller.initializer = initializer.key();
     controller.id = id.clone();
+    controller.token_mint = token_mint.key();
     controller.token_price = token_price;
     controller.token_decimal = token_decimal;
     controller.sol_received = 0;
@@ -43,7 +45,7 @@ pub struct Initialize<'info> {
         init,
         payer=initializer, 
         space = Controller::LEN,
-        seeds = [CONTROLLER_PDA_SEED.as_ref(), token_mint.key().as_ref() ,id.as_ref()],
+        seeds = [CONTROLLER_PDA_SEED.as_ref(), token_mint.key().as_ref(), id.as_ref()],
         bump
     )]
     pub controller: Account<'info, Controller>,

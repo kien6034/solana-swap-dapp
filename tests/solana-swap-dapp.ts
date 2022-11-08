@@ -89,9 +89,16 @@ describe("solana-swap-dapp", () => {
     // Check escrow balacne 
     let escrowBalance = await getSplBalance(swapper.provider, escrowPDA.key);
     console.log(escrowBalance)
-    await swapper.withdrawEscrow(deployer, deployer_token_wallet)
 
-    escrowBalance = await getSplBalance(swapper.provider, escrowPDA.key);
-    console.log(escrowBalance)
+    let deployerBalance = await getSplBalance(swapper.provider, deployer_token_wallet);
+    console.log(deployerBalance)
+    let tx = await swapper.withdrawEscrow(deployer, deployer_token_wallet)
+
+    let escrowBalance2 = await getSplBalance(swapper.provider, escrowPDA.key);
+    
+    console.log(escrowBalance2)
+    deployerBalance = await getSplBalance(swapper.provider, deployer_token_wallet);
+    console.log(deployerBalance)
+
   })  
 });

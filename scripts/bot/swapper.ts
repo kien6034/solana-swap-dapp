@@ -107,7 +107,7 @@ export class Swapper extends Bot {
             controller: controllerPDA.key,
             escrow: escrowPDA.key,
             initializerTokenAccount: initializer_token_account
-        })
+        }).signers([initializer]).rpc();
     }
 
 }
