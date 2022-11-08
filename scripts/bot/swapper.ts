@@ -13,24 +13,27 @@ interface PDAParam {
 
 export class Swapper extends Bot { 
     id: string;
+    tokenMint: anchor.web3.PublicKey;
 
     constructor(
         id: string,
+        tokenMint: anchor.web3.PublicKey,
         provider?: anchor.AnchorProvider, 
         deployer?: anchor.web3.Keypair
     ){
         super(provider, deployer);
         this.program = anchor.workspace.SolanaSwapDapp;
         this.id = id;
+        this.tokenMint = tokenMint
     }
 
 
-    getControllerPDA = async(mint: anchor.web3.PublicKey): Promise<PDAParam> => {
+    getControllerPDA = async(): Promise<PDAParam> => {
         const [pda, bump] = await anchor.web3.PublicKey
         .findProgramAddress(
             [
             anchor.utils.bytes.utf8.encode(CONTROLLER_PDA_SEED),
-            mint.toBuffer(),
+            this.tokenMint.toBuffer(),
             anchor.utils.bytes.utf8.encode(this.id)
             ],
             this.program.programId
@@ -42,12 +45,12 @@ export class Swapper extends Bot {
         }
     }
 
-    getEscrowPDA = async(mint: anchor.web3.PublicKey): Promise<PDAParam> => {
+    getEscrowPDA = async(): Promise<PDAParam> => {
         const [pda, bump] = await anchor.web3.PublicKey
         .findProgramAddress(
             [
             anchor.utils.bytes.utf8.encode(ESCROW_PDA_SEED),
-            mint.toBuffer(),
+            this.tokenMint.toBuffer(),
             anchor.utils.bytes.utf8.encode(this.id)
             ],
             this.program.programId
@@ -61,17 +64,16 @@ export class Swapper extends Bot {
 
     initialize = async(
         initializer: anchor.web3.Keypair, 
-        tokenMint: anchor.web3.PublicKey,
         id: String, 
         token_price: anchor.BN[], 
         token_decimal: number
     )=> {
-        let controllerPDA = await this.getControllerPDA(tokenMint);
-        let escrowPDA = await this.getEscrowPDA(tokenMint);
+        let controllerPDA = await this.getControllerPDA();
+        let escrowPDA = await this.getEscrowPDA();
 
         return await this.program.methods.initialize(id, token_price, token_decimal).accounts({
             initializer: initializer.publicKey,
-            tokenMint: tokenMint,
+            tokenMint: this.tokenMint,
             controller: controllerPDA.key,
             escrow: escrowPDA.key
         }).signers([initializer]).rpc();
@@ -79,10 +81,21 @@ export class Swapper extends Bot {
 
 
     swap = async(user: anchor.web3.Keypair, receiver: anchor.web3.PublicKey)=> {
+        let controllerPDA = await this.getControllerPDA();
+
         return await this.program.methods.swap().accounts({
             user: user.publicKey,
-            receiver: receiver
+            controller: controllerPDA.key
         }).signers([user]).rpc();
+    }
+
+    withdrawSol = async(initializer: anchor.web3.Keypair)=> {
+        let controllerPDA = await this.getControllerPDA();
+
+        return await this.program.methods.withdrawSol().accounts({
+            initializer: initializer.publicKey,
+            controller: controllerPDA.key
+        }).signers([initializer]).rpc();
     }
 
 }

@@ -8,6 +8,8 @@ pub struct Controller{
     pub token_mint: Pubkey,
     pub token_decimal: u8,
     pub token_price: Vec<u64>, // Price, denominator: 1 SOL = token_price[0]/ token_price[1]
+    pub sol_received: u64,
+    pub sol_claimed: u64
     
 }
 

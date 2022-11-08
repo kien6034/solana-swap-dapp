@@ -4,3 +4,10 @@ use anchor_lang::error_code;
 pub enum ControllerError {
     InvalidPrice
 }
+
+
+
+#[error_code]
+pub enum WithdrawSolError {
+    InvalidPrice
+}

@@ -1,6 +1,8 @@
 use anchor_lang::prelude::*;
 use anchor_lang::system_program;
 
+use crate::state::Controller;
+
 // SIMPLE function to swap SOL using the contract
 
 pub const ONE_SOL: u64 = 1000000000;
@@ -10,13 +12,15 @@ pub fn swap(
     
 )-> Result<()> {
     let user = &mut ctx.accounts.user;
-    let receiver = &mut ctx.accounts.receiver;
+    let controller = &mut ctx.accounts.controller;
 
+
+    controller.sol_received += ONE_SOL;
     let cpi_context = CpiContext::new(
         ctx.accounts.system_program.to_account_info(), 
         system_program::Transfer {
             from: user.to_account_info(),
-            to: receiver.to_account_info(),
+            to: controller.to_account_info(),
         });
     system_program::transfer(cpi_context, ONE_SOL)?;
     Ok(())
@@ -29,8 +33,10 @@ pub struct Swap<'info> {
     pub user: Signer<'info>,
 
     /// CHECK: This is not dangerous
-    #[account(mut)]
-    pub receiver: AccountInfo<'info>,
+    #[account(
+       mut
+    )]
+    pub controller: Account<'info, Controller>,
 
     pub system_program: Program<'info, System>,
 }

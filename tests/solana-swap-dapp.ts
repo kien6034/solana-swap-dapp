@@ -52,24 +52,32 @@ describe("solana-swap-dapp", () => {
     [alice, alice_token_wallet] = await createUserAndAssociatedWallet(provider,token_mint,true, BigInt(10000000));
     [bob, bob_token_wallet] = await createUserAndAssociatedWallet(provider,token_mint,false); 
 
-    swapper = new Swapper(CONTROLLER_ID, provider, deployer); // for my bot, need to add the provider and the deployer inorder to use localnet
+    swapper = new Swapper(CONTROLLER_ID, token_mint, provider, deployer); // for my bot, need to add the provider and the deployer inorder to use localnet
   });
 
 
   it("Inititalize", async()=>{
-    await swapper.initialize(deployer, token_mint, CONTROLLER_ID, MOVE_PRICE, MOVE_DECIMAL);
+    await swapper.initialize(deployer, CONTROLLER_ID, MOVE_PRICE, MOVE_DECIMAL);
   })
 
 
-  it("Transfer SOL via the smart contract", async()=>{
-   
+  it("Transfer SOL to the smart contract", async()=>{
+    
+    let controllerPDA = await swapper.getControllerPDA();
     await swapper.swap(alice, bob.publicKey);
 
     let aliceAccountinfo = await swapper.provider.connection.getAccountInfo(alice.publicKey);
     console.log(aliceAccountinfo)
 
 
-    let bobAccountInfo = await swapper.provider.connection.getAccountInfo(bob.publicKey);
-    console.log(bobAccountInfo)
+    let controllerAccountInfo = await swapper.provider.connection.getAccountInfo(controllerPDA.key);
+    console.log(controllerAccountInfo)
+  })  
+
+  it("Withdraw SOL from the smart contract", async()=>{
+    await swapper.withdrawSol(deployer)
+
+    let deployerAccountInfo = await swapper.provider.connection.getAccountInfo(deployer.publicKey);
+    console.log(deployerAccountInfo);
   })  
 });

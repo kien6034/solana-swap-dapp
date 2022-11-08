@@ -27,5 +27,9 @@ pub mod solana_swap_dapp {
     pub fn swap(ctx: Context<Swap>) -> Result<()> {
         instructions::swap::swap(ctx)
     }
+
+    pub fn withdraw_sol(ctx: Context<WithdrawSol>) -> Result<()> {
+        instructions::withdraw_sol::withdraw_sol(ctx)
+    }
 }
 

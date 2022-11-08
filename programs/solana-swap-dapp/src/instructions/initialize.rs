@@ -22,7 +22,8 @@ pub fn initialize(
     controller.id = id.clone();
     controller.token_price = token_price;
     controller.token_decimal = token_decimal;
-
+    controller.sol_received = 0;
+    controller.sol_claimed = 0;
     controller.bump = *ctx.bumps.get(str::from_utf8(CONTROLLER_PDA_SEED).unwrap()).unwrap();
 
     
