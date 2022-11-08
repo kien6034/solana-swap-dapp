@@ -1,7 +1,7 @@
 import * as anchor from "@project-serum/anchor";
-import { Program } from "@project-serum/anchor";
+import { Program, splitArgsAndCtx } from "@project-serum/anchor";
 import { Swapper } from "../scripts/bot/swapper";
-import { createMintToken, createUserAndAssociatedWallet, getAccountInfo } from "../scripts/utils/token";
+import { createMintToken, createUserAndAssociatedWallet, getSplAccountInfo, getSplBalance, transferToken } from "../scripts/utils/token";
 import { SolanaSwapDapp } from "../target/types/solana_swap_dapp";
 
 const CONTROLLER_ID= "1";
@@ -79,5 +79,19 @@ describe("solana-swap-dapp", () => {
 
     let deployerAccountInfo = await swapper.provider.connection.getAccountInfo(deployer.publicKey);
     console.log(deployerAccountInfo);
+  })  
+
+  it("Withdraw MOVE token from the smart contract", async()=>{
+    let escrowPDA = await swapper.getEscrowPDA();
+
+    await transferToken(swapper.provider, alice_token_wallet, escrowPDA.key, alice, 1000000);
+
+    // Check escrow balacne 
+    let escrowBalance = await getSplBalance(swapper.provider, escrowPDA.key);
+    console.log(escrowBalance)
+    await swapper.withdrawEscrow(deployer, deployer_token_wallet)
+
+    escrowBalance = await getSplBalance(swapper.provider, escrowPDA.key);
+    console.log(escrowBalance)
   })  
 });

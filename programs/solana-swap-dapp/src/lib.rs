@@ -31,5 +31,9 @@ pub mod solana_swap_dapp {
     pub fn withdraw_sol(ctx: Context<WithdrawSol>) -> Result<()> {
         instructions::withdraw_sol::withdraw_sol(ctx)
     }
+
+    pub fn withdraw_escrow(ctx: Context<WithdrawEscrow>) -> Result<()> {
+        instructions::withdraw_escrow::withdraw_escrow(ctx)
+    }
 }
 

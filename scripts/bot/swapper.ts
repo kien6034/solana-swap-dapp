@@ -98,4 +98,16 @@ export class Swapper extends Bot {
         }).signers([initializer]).rpc();
     }
 
+    withdrawEscrow = async(initializer: anchor.web3.Keypair, initializer_token_account: anchor.web3.PublicKey) => {
+        let controllerPDA = await this.getControllerPDA();
+        let escrowPDA = await this.getEscrowPDA();
+
+        return await this.program.methods.withdrawEscrow().accounts({
+            initializer: initializer.publicKey,
+            controller: controllerPDA.key,
+            escrow: escrowPDA.key,
+            initializerTokenAccount: initializer_token_account
+        })
+    }
+
 }

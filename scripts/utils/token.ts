@@ -208,7 +208,7 @@ export const approveToken = async(provider: anchor.AnchorProvider, account: anch
   await provider.sendAndConfirm(txTransfer, [owner]);
 }
 
-export const getAccountInfo = async(provider: anchor.AnchorProvider, tokenAccount: anchor.web3.PublicKey) =>{
+export const getSplAccountInfo = async(provider: anchor.AnchorProvider, tokenAccount: anchor.web3.PublicKey) =>{
   return await spl.getAccount(provider.connection, tokenAccount)
 }
 
