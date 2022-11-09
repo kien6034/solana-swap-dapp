@@ -14,17 +14,16 @@ const  main= async()=>{
     console.log(`Mint successfully: ${tokenMint}`)
     await createAssociatedWalletAndMint(bot.provider, bot.deployer, tokenMint, mintAmount);
 
-
     const tokenMetadata = {
       name: "MOVE",
       symbol: "MOVE",
-      uri: "https://raw.githubusercontent.com/kien6034/solana-swap-dapp/develop/programs/solana-swap-dapp/meta/metadata",
+      uri: "https://raw.githubusercontent.com/kien6034/solana-swap-dapp/develop/programs/solana-swap-dapp/meta/metadata.json",
       sellerFeeBasisPoints: 0,
       creators: null,
       collection: null,
       uses: null
     } as DataV2;
-    //await createTokenMetadata(bot.provider, bot.deployer, mint, tokenMetadata);
+    await createTokenMetadata(bot.provider, bot.deployer, tokenMint, tokenMetadata);
 }
   
 main().catch(error => console.log(error));

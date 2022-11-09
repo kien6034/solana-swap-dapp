@@ -71,6 +71,7 @@ export class Swapper extends Bot {
         let controllerPDA = await this.getControllerPDA();
         let escrowPDA = await this.getEscrowPDA();
 
+        console.log(controllerPDA)
         return await this.program.methods.initialize(id, token_price, token_decimal).accounts({
             initializer: initializer.publicKey,
             tokenMint: this.tokenMint,

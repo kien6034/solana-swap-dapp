@@ -2,7 +2,7 @@
 seeds = false
 skip-lint = false
 [programs.devnet]
-solana_swap_dapp = "6NZ8NE9P3XPKwJnjuwx2mJk46c7bQnSzTW7HRSC2Eg1U"
+solana_swap_dapp = "6hfMUbmduTkg4vjCUa3TS68xGtT9wmcEc3UrpKNkAVaP"
 
 [registry]
 url = "https://api.apr.dev"
