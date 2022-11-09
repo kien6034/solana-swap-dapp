@@ -24,8 +24,8 @@ pub mod solana_swap_dapp {
         instructions::initialize::initialize(ctx, id, token_price, token_decimal)
     }
 
-    pub fn swap(ctx: Context<Swap>) -> Result<()> {
-        instructions::swap::swap(ctx)
+    pub fn swap(ctx: Context<Swap>, swap_amount: u64) -> Result<()> {
+        instructions::swap::swap(ctx, swap_amount)
     }
 
     pub fn withdraw_sol(ctx: Context<WithdrawSol>) -> Result<()> {

@@ -80,12 +80,16 @@ export class Swapper extends Bot {
     }
 
 
-    swap = async(user: anchor.web3.Keypair, receiver: anchor.web3.PublicKey)=> {
+    swap = async(user: anchor.web3.Keypair, userTokenAccount: anchor.web3.PublicKey, amount: anchor.BN)=> {
         let controllerPDA = await this.getControllerPDA();
+        let escrowPDA = await this.getEscrowPDA();
 
-        return await this.program.methods.swap().accounts({
+        return await this.program.methods.swap(amount).accounts({
             user: user.publicKey,
-            controller: controllerPDA.key
+            controller: controllerPDA.key,
+            tokenMint: this.tokenMint, 
+            escrow: escrowPDA.key, 
+            userTokenAccount: userTokenAccount
         }).signers([user]).rpc();
     }
 

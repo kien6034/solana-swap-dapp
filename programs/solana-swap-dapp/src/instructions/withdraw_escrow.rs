@@ -1,6 +1,6 @@
 use anchor_lang::{prelude::*};
 use crate::{state::Controller, CONTROLLER_PDA_SEED};
-use anchor_spl::token::{TokenAccount, Transfer, Mint};
+use anchor_spl::token::{TokenAccount, Transfer};
 
 
 //use crate::errors::WithdrawSolError;
