@@ -2,8 +2,10 @@
 A smart contract that allow from SOL to MOVE tokens.
 
 ## Demo website
-https://www.kien6034.com/
+- https://www.kien6034.com/
 
+- Mint token address
+739dVcQCH57ioTUCcYSBXFty47JSf4Hm5jqoNGuCyBXn
 
 ## Program structure 
 The program using the following mechanism to handle the swap from SOL to MOVE tokens.
@@ -55,3 +57,7 @@ The testing scripts is located in the `tests\` folders
 Run `anchor test` to test the program
 
 **_NOTE:_**  Before run the test, change the config in the `Anchor.toml` from devnet to localnet to test on the local.
+
+
+## FE 
+To run the FE, ``cd app`, remove the lock file and node modules if there are any, and run `yarn && yarn dev`
