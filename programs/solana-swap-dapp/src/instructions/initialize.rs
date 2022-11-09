@@ -14,7 +14,7 @@ pub fn initialize(
     token_decimal: u8
 )-> Result<()> {
     require!(token_price.len() == 2, ControllerError::InvalidPrice);
-    require!(id.chars().count()> MAX_STRING_LEN, ControllerError::InvalidID);
+    require!(id.chars().count()< MAX_STRING_LEN, ControllerError::InvalidID);
 
     let controller = &mut ctx.accounts.controller;
     let initializer = &ctx.accounts.initializer;
@@ -28,7 +28,7 @@ pub fn initialize(
     controller.sol_received = 0;
     controller.sol_claimed = 0;
     controller.bump = *ctx.bumps.get(str::from_utf8(CONTROLLER_PDA_SEED).unwrap()).unwrap();
-
+    controller.escrow_bump = *ctx.bumps.get(str::from_utf8(ESCROW_PDA_SEED).unwrap()).unwrap();
     
     msg!("action: initialize");
     msg!("initializer: {}", initializer.key());

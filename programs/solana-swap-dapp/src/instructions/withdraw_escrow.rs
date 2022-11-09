@@ -1,5 +1,5 @@
 use anchor_lang::{prelude::*};
-use crate::{state::Controller, CONTROLLER_PDA_SEED};
+use crate::{state::Controller, CONTROLLER_PDA_SEED, ESCROW_PDA_SEED};
 use anchor_spl::token::{TokenAccount, Transfer};
 
 
@@ -49,11 +49,15 @@ pub struct WithdrawEscrow<'info> {
 
     #[account(
        mut, 
-       has_one = initializer
+       has_one = initializer,
+       seeds = [CONTROLLER_PDA_SEED, controller.token_mint.as_ref(), controller.id.as_ref()], bump = controller.bump
     )]
     pub controller: Account<'info, Controller>,  
     
-    #[account(mut)]
+    #[account(
+        mut,
+        seeds = [ESCROW_PDA_SEED, controller.token_mint.as_ref(), controller.id.as_ref()], bump = controller.escrow_bump
+    )]
     pub escrow: Account<'info, TokenAccount>,
 
     #[account(

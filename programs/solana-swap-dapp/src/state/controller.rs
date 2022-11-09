@@ -11,8 +11,8 @@ pub struct Controller{
     pub token_decimal: u8,
     pub token_price: Vec<u64>, // Price, denominator: 1 SOL = token_price[0]/ token_price[1]
     pub sol_received: u64,
-    pub sol_claimed: u64
-    
+    pub sol_claimed: u64,
+    pub escrow_bump: u8
 }
 
 const DISCRIMINATOR_LENGTH: usize = 8;
@@ -31,7 +31,8 @@ impl Controller{
         + U8_SIZE_LENGTH
         + TOKEN_PRICE_LENGTH
         + U64_SIZE_LENGTH 
-        + U64_SIZE_LENGTH; 
+        + U64_SIZE_LENGTH
+        + U8_SIZE_LENGTH;
     
 
     pub fn get_amounts_out(&self, lamports_amount: u64) -> u64 {

@@ -1,5 +1,5 @@
 use anchor_lang::{prelude::*};
-use crate::{state::Controller};
+use crate::{state::Controller, CONTROLLER_PDA_SEED};
 
 
 pub fn withdraw_sol(
@@ -24,6 +24,7 @@ pub struct WithdrawSol<'info> {
 
     #[account(
        mut, 
+       seeds = [CONTROLLER_PDA_SEED, controller.token_mint.as_ref(), controller.id.as_ref()], bump = controller.bump,
        has_one = initializer
     )]
     pub controller: Account<'info, Controller>,    

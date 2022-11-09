@@ -3,6 +3,7 @@ use anchor_lang::system_program;
 use anchor_spl::token::Transfer;
 
 use crate::CONTROLLER_PDA_SEED;
+use crate::ESCROW_PDA_SEED;
 use crate::state::Controller;
 use anchor_spl::token::{TokenAccount, Mint};
 
@@ -64,13 +65,17 @@ pub struct Swap<'info> {
     pub user: Signer<'info>,
 
     #[account(
-       mut
+        mut,
+        seeds = [CONTROLLER_PDA_SEED, token_mint.key().as_ref(), controller.id.as_ref()], bump = controller.bump
     )]
     pub controller: Account<'info, Controller>,
     pub token_mint: Account<'info, Mint>,
     pub system_program: Program<'info, System>,
 
-    #[account(mut)]
+    #[account(
+        mut,
+        seeds = [ESCROW_PDA_SEED, token_mint.key().as_ref(), controller.id.as_ref()], bump = controller.escrow_bump
+    )]
     pub escrow: Account<'info, TokenAccount>,
 
     #[account(
