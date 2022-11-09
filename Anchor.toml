@@ -1,14 +1,14 @@
 [features]
 seeds = false
 skip-lint = false
-[programs.devnet]
+[programs.localnet]
 solana_swap_dapp = "J1KNgjD2T5M1wzi9fqJhBCmcLV8yp1r86AnarpZvySST"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "/Users/kien6034/.config/solana/id.json"
 
 [scripts]
