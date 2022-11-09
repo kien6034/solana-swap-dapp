@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use crate::{state::Controller};
 use anchor_spl::token::{ Mint, TokenAccount};
 
-use crate::{CONTROLLER_PDA_SEED,ESCROW_PDA_SEED};
+use crate::{CONTROLLER_PDA_SEED,ESCROW_PDA_SEED, MAX_STRING_LEN};
 use crate::errors::ControllerError;
 use std::str;
 
@@ -14,6 +14,7 @@ pub fn initialize(
     token_decimal: u8
 )-> Result<()> {
     require!(token_price.len() == 2, ControllerError::InvalidPrice);
+    require!(id.chars().count()> MAX_STRING_LEN, ControllerError::InvalidID);
 
     let controller = &mut ctx.accounts.controller;
     let initializer = &ctx.accounts.initializer;
@@ -30,7 +31,7 @@ pub fn initialize(
 
     
     msg!("action: initialize");
-    // TODO: add more logs here
+    msg!("initializer: {}", initializer.key());
     Ok(())
 }
 

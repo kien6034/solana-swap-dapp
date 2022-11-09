@@ -1,5 +1,6 @@
 use anchor_lang::prelude::*;
 const SOL_TO_LAMPORTS: u128 = 1000000000;
+use crate::{MAX_STRING_LEN};
 
 #[account]
 pub struct Controller{
@@ -16,17 +17,15 @@ pub struct Controller{
 
 const DISCRIMINATOR_LENGTH: usize = 8;
 const PUBLIC_KEY_LENGTH: usize = 32;
-const MAX_STRING_LEN: usize = 50 + 4; // 50 bytes + 4 bytes prefix
+const MAX_STRING_LENGTH: usize = MAX_STRING_LEN + 4; // 50 bytes + 4 bytes prefix
 
 const U8_SIZE_LENGTH: usize = 1;
-const TOKEN_PRICE_LENGTH: usize = 2 * 8 + 4;
+const TOKEN_PRICE_LENGTH: usize = 2 * 8 + 4; // 2 elements + 4 bytes prefix
 const U64_SIZE_LENGTH: usize = 8;
 
 impl Controller{ 
- 
-    //TODO: correct this 
     pub const LEN: usize = DISCRIMINATOR_LENGTH
-        + MAX_STRING_LEN
+        + MAX_STRING_LENGTH
         + U8_SIZE_LENGTH 
         + PUBLIC_KEY_LENGTH 
         + U8_SIZE_LENGTH
