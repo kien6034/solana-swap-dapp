@@ -6,6 +6,10 @@ pub enum ControllerError {
     InvalidID
 }
 
+#[error_code]
+pub enum SwapError {
+    InsufficientFund
+}
 
 
 #[error_code]

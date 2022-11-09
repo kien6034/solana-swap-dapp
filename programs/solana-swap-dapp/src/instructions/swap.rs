@@ -6,6 +6,7 @@ use crate::CONTROLLER_PDA_SEED;
 use crate::ESCROW_PDA_SEED;
 use crate::state::Controller;
 use anchor_spl::token::{TokenAccount, Mint};
+use crate::errors::SwapError;
 
 // SIMPLE function to swap SOL using the contract
 pub const ONE_SOL: u64 = 1000000000;
@@ -33,6 +34,8 @@ pub fn swap(
 
     // Transfer MOVE token back to the user 
     let amounts_out = controller.get_amounts_out(swap_amount);
+
+    require!(escrow.amount >= amounts_out, SwapError::InsufficientFund);
     let bump_vector = controller.bump.to_le_bytes();
 
     let inner = vec![

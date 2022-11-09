@@ -211,12 +211,27 @@
           {
             "name": "solClaimed",
             "type": "u64"
+          },
+          {
+            "name": "escrowBump",
+            "type": "u8"
           }
         ]
       }
     }
   ],
   "types": [
+    {
+      "name": "SwapError",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "InsufficientFund"
+          }
+        ]
+      }
+    },
     {
       "name": "WithdrawSolError",
       "type": {
@@ -233,9 +248,13 @@
     {
       "code": 6000,
       "name": "InvalidPrice"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidID"
     }
   ],
   "metadata": {
-    "address": "6hfMUbmduTkg4vjCUa3TS68xGtT9wmcEc3UrpKNkAVaP"
+    "address": "J1KNgjD2T5M1wzi9fqJhBCmcLV8yp1r86AnarpZvySST"
   }
 }
