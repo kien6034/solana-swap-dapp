@@ -5,3 +5,11 @@ target
 **/*.rs.bk
 node_modules
 test-ledger
+
+
+scripts/secret.json
+
+app/node_modules
+app/target
+app/yarn.lock
+app/build
