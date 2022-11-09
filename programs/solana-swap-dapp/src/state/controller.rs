@@ -14,10 +14,25 @@ pub struct Controller{
     
 }
 
+const DISCRIMINATOR_LENGTH: usize = 8;
+const PUBLIC_KEY_LENGTH: usize = 32;
+const MAX_STRING_LEN: usize = 50 + 4; // 50 bytes + 4 bytes prefix
+
+const U8_SIZE_LENGTH: usize = 1;
+const TOKEN_PRICE_LENGTH: usize = 2 * 8 + 4;
+const U64_SIZE_LENGTH: usize = 8;
 
 impl Controller{ 
+ 
     //TODO: correct this 
-    pub const LEN: usize = 200; 
+    pub const LEN: usize = DISCRIMINATOR_LENGTH
+        + MAX_STRING_LEN
+        + U8_SIZE_LENGTH 
+        + PUBLIC_KEY_LENGTH 
+        + U8_SIZE_LENGTH
+        + TOKEN_PRICE_LENGTH
+        + U64_SIZE_LENGTH 
+        + U64_SIZE_LENGTH; 
     
 
     pub fn get_amounts_out(&self, lamports_amount: u64) -> u64 {
