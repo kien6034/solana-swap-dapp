@@ -15,15 +15,15 @@ const  main= async()=>{
     await createAssociatedWalletAndMint(bot.provider, bot.deployer, tokenMint, mintAmount);
 
 
-    // const tokenMetadata = {
-    //   name: "MOVE",
-    //   symbol: "MOVE",
-    //   uri: "https://zol3sde3elah2lh5vsptgbre7eu6wzwvlhghfuanetm6lu2rkbya.arweave.net/y5e5DJsiwH0s_ayfMwYk-SnrZtVZzHLQDSTZ5dNRUHA",
-    //   sellerFeeBasisPoints: 0,
-    //   creators: null,
-    //   collection: null,
-    //   uses: null
-    // } as DataV2;
+    const tokenMetadata = {
+      name: "MOVE",
+      symbol: "MOVE",
+      uri: "https://raw.githubusercontent.com/kien6034/solana-swap-dapp/develop/programs/solana-swap-dapp/meta/metadata",
+      sellerFeeBasisPoints: 0,
+      creators: null,
+      collection: null,
+      uses: null
+    } as DataV2;
     //await createTokenMetadata(bot.provider, bot.deployer, mint, tokenMetadata);
 }
   
